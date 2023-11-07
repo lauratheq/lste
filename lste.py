@@ -207,4 +207,10 @@ class LSTE:
 			time.sleep(500/1000)
 
 if __name__ == "__main__":
-	lste = LSTE()
+    try:
+        lste = LSTE()
+    except KeyboardInterrupt:
+        try:
+            sys.exit(130)
+        except SystemExit:
+            os._exit(130)
