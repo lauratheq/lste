@@ -31,11 +31,6 @@ See `/example` for a simple website template
 #   -d|--destination  Sets the directory where the website is rendered to
 #   -w|--watch        Automatically generates the website to ./dist
 #                     if a file in /src, /assets or /parts changed
-#
-# LEGAL NOTE
-#   Written and maintained by Laura Herzog (laura-herzog@outlook.com)
-#   Permission to copy and modify is granted under the GPL license
-#   Project Information: https://github.com/lauraherzog/lste/
 ```
 
 Hint: You can also move the lste.py to your local bin directory to use it systemwide
