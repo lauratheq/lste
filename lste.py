@@ -17,8 +17,7 @@
 #   -p|--path         Sets the base directory for the website. If not setted
 #                     LSTE uses the current active directory
 #   -d|--destination  Sets the directory where the website is rendered to
-#   -w|--watch        Automatically generates the website to ./dist
-#                     if a file in /src, /assets or /parts changed
+#   -w|--watch        Automatically generates the website if a file is changed
 #
 # LEGAL NOTE
 #   Written and maintained by Laura Herzog (laura-herzog@outlook.com)
@@ -180,53 +179,24 @@ class LSTE:
 
 	@staticmethod
 	def setup_filestack(self):
-		parts_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.parts_path) for f in filenames]
-		src_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.src_path) for f in filenames]
-		assets_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.assets_path) for f in filenames]
+		files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.base_path) for f in filenames]
 
-		for part_file in parts_files:
-			mtime = os.path.getmtime(part_file)
-			self.file_stack[part_file] = mtime
-
-		for src_file in src_files:
-			mtime = os.path.getmtime(src_file)
-			self.file_stack[src_file] = mtime
-
-		for asset_file in assets_files:
-			mtime = os.path.getmtime(asset_file)
-			self.file_stack[asset_file] = mtime
-   
-		mtime = os.path.getmtime(self.config_file)
-		self.file_stack[self.config_file] = mtime
+		for file in files:
+			mtime = os.path.getmtime(file)
+			self.file_stack[file] = mtime
 
 	@staticmethod
 	def run_file_watcher(self):
-		print('Watching folders ./src, ./assets and ./parts for changes ...')
+		print(f'Watching folders in {self.base_path} for changed files ...')
 
 		while(True):
 			change_found = False
 
-			parts_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.parts_path) for f in filenames]
-			for part_file in parts_files:
-				mtime = os.path.getmtime(part_file)
-				if part_file not in self.file_stack or self.file_stack[part_file] != mtime:
+			files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.base_path) for f in filenames]
+			for file in files:
+				mtime = os.path.getmtime(file)
+				if file not in self.file_stack or self.file_stack[file] != mtime:
 					change_found = True
-
-			src_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.src_path) for f in filenames]
-			for src_file in src_files:
-				mtime = os.path.getmtime(src_file)
-				if src_file not in self.file_stack or self.file_stack[src_file] != mtime:
-					change_found = True
-	
-			assets_files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(self.assets_path) for f in filenames]
-			for asset_file in assets_files:
-				mtime = os.path.getmtime(asset_file)
-				if asset_file not in self.file_stack or self.file_stack[asset_file] != mtime:
-					change_found = True
-
-			mtime = os.path.getmtime(self.config_file)
-			if self.config_file not in self.file_stack or self.file_stack[self.config_file] != mtime:
-				change_found = True
 
 			if change_found:
 				print('Change detected')
