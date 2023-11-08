@@ -197,6 +197,11 @@ class LSTE:
 				mtime = os.path.getmtime(file)
 				if file not in self.file_stack or self.file_stack[file] != mtime:
 					change_found = True
+   
+			for check_file in list(self.file_stack):
+				if not os.path.isfile(check_file):
+					self.file_stack.pop(check_file)
+					change_found = True
 
 			if change_found:
 				print('Change detected')
