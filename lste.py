@@ -22,7 +22,7 @@
 # LEGAL NOTE
 #   Written and maintained by Laura Herzog (laura-herzog@outlook.com)
 #   Permission to copy and modify is granted under the GPL license
-#   Project Information: https://github.com/lauraherzog/lste/
+#   Project Information: https://github.com/lauratheq/lste/
 
 import os, time, shutil, getopt, sys, configparser
 
