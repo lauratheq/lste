@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Working-Directory - Message boxes in lazywp</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="Working Directory is a personal development blog brought to you by Laura">
+        <meta name="keywords" content="lazywp, wordpress, python">
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/highlight.min.css" />
+
+        <script src="assets/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+        <aside>
+    <div class="inner">
+        <div class="user-profile">
+            <div class="picture">
+                <img src="assets/img/laura.jpg">
+            </div>
+            <div class="data">
+                <p><strong>Working Directory</strong></p>
+                <p>Laura's dev log</p>
+            </div>
+        </div>
+    
+        <div class="widget navigation">
+            <p>meta</p>
+            <ul>
+                <li class="active" id="blog"><a href="index.html">blog</a></li>
+                <li id="contact"><a href="contact.html">contact / legal</a></li>
+                <li id="feed"><a href="feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="widget navigation">
+            <p>my projects</p>
+            <ul id="menu-projects" class="menu">
+                <li><a href="https://github.com/lauratheq/lazywp/">lazywp</a></li>
+                <li><a href="https://github.com/lauratheq/cauldron">Cauldron</a></li>
+                <li><a href="https://github.com/lauratheq/advanced-network-management">Advanced Network Management</a></li>
+                <li><a href="https://github.com/lauratheq/lste">Lauras Simple Template Engine</a></li>
+            </ul>
+        </div>
+    
+        <div class="widget navigation">
+            <p>blogroll</p>
+            <ul id="menu-blogroll" class="menu">
+                <li><a href="https://notiz.blog/">Matthias Pfefferle</a></li>
+                <li><a href="https://florianbrinkmann.com/">Florian Brinkmann</a></li>
+                <li><a href="https://maja-benke.de/">Maja Benke</a></li>
+                <li><a href="https://www.caroleolinger.com/">Carole Olinger</a></li>
+                <li><a href="https://licobi-design.de/">Birgit Olzem</a></li>
+                <li><a href="https://simon.blog/">Simon Kraft</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+<main>
+    <article>
+    <span class="category">lazywp</span>
+    <time datetime="24.05.2024T00:00:00+02:00" itemprop="datePublished">24.05.2024</time>
+    <h2>Message boxes in lazywp</h2>
+    <p>I pushed my current state into the main branch of <a href="https://github.com/lauratheq/lazywp/">lazywp</a>. It doesn’t seem like much but I can now trigger a message box with a simple command and have an option to answer yes and no questions.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Messagebox in lazywp with a yes / no option" src="assets/articles/lazywp-message-boxes.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><em>Messagebox in lazywp with a yes / no option</em></td>
+</tr>
+</tbody>
+</table>
+<p>It’s not much, but I am a step closer to more implementations. Currently it’s possible to toggle activation, updating and deleting plugins. The next step is to create an installation prompt for new plugins. I think after that I will implement the help page which dynamically fetches the information from the commands.</p>
+</article>
+</main>
+        </div>
+
+    </body>
+</html>
+

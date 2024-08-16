@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Example: Simple</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="This is a very simple LSTE example">
+        <meta name="keywords" content="lste, simple example">
+
+        <link rel="stylesheet" type="text/css" href="assets/style.css?ver=1723785618" />
+    </head>
+    <body>
+<div class="wrapper">
+    <header>
+    <h1>Example: Simple</h1>
+    <span class="description">This is a very simple LSTE example</span>
+</header>
+    <aside>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="sample.html">Sample Page</a></li>
+        <li><a href="other.html">Other Sample</a></li>
+    </ul>
+</aside>
+    <main>
+        <article>
+    <h2>Home</h2>
+    <p>This is a basic example for a LSTE project. Here we don't use any plugins and are just using the core functionalities of LSTE. Below you'll find a small documentation of the structure of this project.</p>
+<h2>Config File</h2>
+<p>In the root folder of this example you find the <code>lste.conf</code> file. It contains the basic information of this website like the title, keywords and description.</p>
+<pre><code>[lste]
+title = Example: Simple
+keywords = lste, simple example
+description = This is a very simple LSTE example
+</code></pre>
+<p>You can use these information throughout your project by placing <code>title</code>, <code>keywords</code> or <code>description</code> enclosed with <code>{{}}</code> in your templates or content.</p>
+<h2>Templates &amp; Assets</h2>
+<p>Templates define the layout and structure of your website. LSTE uses these templates to generate the final HTML pages. In this example, you will need the following template files:</p>
+<ul>
+<li><code>index.html</code>: The base template where you can do whatever you want</li>
+<li><code>page.html</code>: which represents the content of a single page</li>
+</ul>
+<p>Templates use placeholders enclosed in <code>{{}}</code> to dynamically insert template parts. With <code>part: header.html</code> LSTE includes this template file.</p>
+<h3>Assets</h3>
+<p>The assets directory contains static files such as CSS stylesheets, JavaScript files, and images that are used throughout your website and whatever you want. These assets will be copied to the ./dist directory during the site generation process.</p>
+<h2>Content</h2>
+<p>Content files are where you define the actual text and media that will appear on your site. For this example, content is organized in the content directory. Here's what you might find:</p>
+<ul>
+<li><code>index.md</code>: The main content file for the homepage</li>
+<li><code>sample.md</code>: A page called sample :)</li>
+</ul>
+<p>Each markdown file represents a <code>.html</code> file after the site generation.</p>
+</article>
+    </main>
+    <footer>
+    The content and website is licenced under <a href="https://creativecommons.org/licenses/by/4.0/deed.en">CC-BY 4.0</a> by <a href="https://github.com/lauratheq">Laura</a>
+</footer>
+</div>
+    </body>
+</html>

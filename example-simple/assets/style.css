@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 800px;
+    margin: 0 auto;
+    line-height: 1.3em;
+    font-family: sans-serif;
+}
+
+header {
+    padding: 10px;
+    border-bottom: 1px solid #999;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.3em;
+}
+
+header span.description {
+    display: block;
+    margin: 10px 0 0 0;
+}
+
+aside {
+    float: left;
+    width: 200px;
+    background: #f1f1f1;
+}
+
+main {
+    float: left;
+    width: 600px;
+    padding: 0 25px;
+}
+
+pre {
+    padding: 10px;
+    background: #f1f1f1;
+}
+
+footer {
+    clear: both;
+}

@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Working-Directory - Rewriting LazyWP: Lessons from the First Overhaul</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="Working Directory is a personal development blog brought to you by Laura">
+        <meta name="keywords" content="lazywp, wordpress, python">
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/highlight.min.css" />
+
+        <script src="assets/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+        <aside>
+    <div class="inner">
+        <div class="user-profile">
+            <div class="picture">
+                <img src="assets/img/laura.jpg">
+            </div>
+            <div class="data">
+                <p><strong>Working Directory</strong></p>
+                <p>Laura's dev log</p>
+            </div>
+        </div>
+    
+        <div class="widget navigation">
+            <p>meta</p>
+            <ul>
+                <li class="active" id="blog"><a href="index.html">blog</a></li>
+                <li id="contact"><a href="contact.html">contact / legal</a></li>
+                <li id="feed"><a href="feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="widget navigation">
+            <p>my projects</p>
+            <ul id="menu-projects" class="menu">
+                <li><a href="https://github.com/lauratheq/lazywp/">lazywp</a></li>
+                <li><a href="https://github.com/lauratheq/cauldron">Cauldron</a></li>
+                <li><a href="https://github.com/lauratheq/advanced-network-management">Advanced Network Management</a></li>
+                <li><a href="https://github.com/lauratheq/lste">Lauras Simple Template Engine</a></li>
+            </ul>
+        </div>
+    
+        <div class="widget navigation">
+            <p>blogroll</p>
+            <ul id="menu-blogroll" class="menu">
+                <li><a href="https://notiz.blog/">Matthias Pfefferle</a></li>
+                <li><a href="https://florianbrinkmann.com/">Florian Brinkmann</a></li>
+                <li><a href="https://maja-benke.de/">Maja Benke</a></li>
+                <li><a href="https://www.caroleolinger.com/">Carole Olinger</a></li>
+                <li><a href="https://licobi-design.de/">Birgit Olzem</a></li>
+                <li><a href="https://simon.blog/">Simon Kraft</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+<main>
+    <article>
+    <span class="category">lazywp</span>
+    <time datetime="12.06.2024T00:00:00+02:00" itemprop="datePublished">12.06.2024</time>
+    <h2>Rewriting LazyWP: Lessons from the First Overhaul</h2>
+    <p>A couple of weeks ago, I embarked on a journey to develop LazyWP, a tool that leverages curses and Python to create a terminal user interface for WordPress users. As any developer knows, the first iteration of a software project is rarely perfect, and mine was no exception. After some initial development, I found myself at a crossroads that many developers face: it was time for a rewrite.</p>
+<p>This rewrite was a profound learning experience. I quickly discovered the importance of starting on a smaller scale before diving into full-scale implementation of features. By focusing on creating a solid foundation, I ensured that the core functionalities were robust and maintainable. This approach not only made the development process smoother but also enhanced my understanding of <a href="https://docs.python.org/3/library/curses.html">curses</a> and object-oriented programming in Python.</p>
+<p>To be more specific, I restructured the entire codebase and created methods that are much more logical and organized. Now, the code is (more or less) fully documented—a step I initially underestimated but found immensely helpful in the development process. Additionally, I implemented a pseudo-MVC pattern, which gathers all the necessary information and content beforehand, then efficiently displays it.</p>
+<p>One of the key points in rewriting the code was the implementation of commands. It’s possible to develop dynamic imports for packages and call methods within those packages. This makes it surprisingly easy to create new implementations of wpcli commands, as seen in the <a href="https://github.com/lauratheq/lazywp/blob/main/src/commands/plugins.py">plugins</a> implementation. I aimed to make everything as clean and understandable as possible so others could adapt and contribute. However, I’m not entirely sure if my approach to dynamic package loading is correct. It seems straightforward, but Python’s intricacies can be tricky, and I’m still learning. Nonetheless, these <a href="https://github.com/lauratheq/lazywp/blob/main/lazywp#L161">lines</a> of code are the core of the magic:</p>
+<pre><code>commands_path = self.lazywp_path + '/src/commands/'
+commands = [name for _, name, _ in pkgutil.iter_modules([commands_path])]
+for command in commands:
+    self.log.debug(f&quot; - {command}&quot;)
+    command_package = importlib.import_module('src.commands.'+command)
+    self.commands_modules[command] = command_package
+    command_config = command_package.config()
+    self.commands[command] = command_config
+</code></pre>
+<p>Anyway, I can now check off some items on my to-do list for this project:</p>
+<ul>
+<li>Display help which aggregates the infos from the commands (press [?])</li>
+<li>Methods to make usage of curses easier within the project<ul>
+<li>Tables</li>
+<li>Modals</li>
+<li>Confirmation Boxes</li>
+<li>Alerts</li>
+</ul>
+</li>
+<li>Code comments (I am proud!)</li>
+<li>Plugins<ul>
+<li>toggle auto update</li>
+<li>installation of new plugins</li>
+</ul>
+</li>
+<li>Themes<ul>
+<li>update</li>
+<li>update all</li>
+<li>activate</li>
+<li>deactivate</li>
+<li>toggle auto update</li>
+<li>install</li>
+<li>remove</li>
+</ul>
+</li>
+</ul>
+<p>I’ve put together a small video of the current state:</p>
+<p>lazywp demonstration</p>
+<p>When I installed the “default” theme, LazyWP stopped working because wpcli threw numerous PHP Fatal Errors that weren’t caught anywhere. So, my next task is to check the health of the underlying WordPress installation before starting up LazyWP. I believe this will also create synergies with wpcli, as I’ve identified some related issues.</p>
+<p>Unfortunately, I won’t have much time to work on the project in the coming months due to my upcoming bachelor thesis. If anyone is interested in contributing, please reach out! 🙂</p>
+</article>
+</main>
+        </div>
+
+    </body>
+</html>
+
