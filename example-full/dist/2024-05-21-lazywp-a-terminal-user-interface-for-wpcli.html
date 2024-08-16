@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Working-Directory - lazywp – A terminal user interface for wpcli</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="Working Directory is a personal development blog brought to you by Laura">
+        <meta name="keywords" content="lazywp, wordpress, python">
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/highlight.min.css" />
+
+        <script src="assets/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+        <aside>
+    <div class="inner">
+        <div class="user-profile">
+            <div class="picture">
+                <img src="assets/img/laura.jpg">
+            </div>
+            <div class="data">
+                <p><strong>Working Directory</strong></p>
+                <p>Laura's dev log</p>
+            </div>
+        </div>
+    
+        <div class="widget navigation">
+            <p>meta</p>
+            <ul>
+                <li class="active" id="blog"><a href="index.html">blog</a></li>
+                <li id="contact"><a href="contact.html">contact / legal</a></li>
+                <li id="feed"><a href="feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="widget navigation">
+            <p>my projects</p>
+            <ul id="menu-projects" class="menu">
+                <li><a href="https://github.com/lauratheq/lazywp/">lazywp</a></li>
+                <li><a href="https://github.com/lauratheq/cauldron">Cauldron</a></li>
+                <li><a href="https://github.com/lauratheq/advanced-network-management">Advanced Network Management</a></li>
+                <li><a href="https://github.com/lauratheq/lste">Lauras Simple Template Engine</a></li>
+            </ul>
+        </div>
+    
+        <div class="widget navigation">
+            <p>blogroll</p>
+            <ul id="menu-blogroll" class="menu">
+                <li><a href="https://notiz.blog/">Matthias Pfefferle</a></li>
+                <li><a href="https://florianbrinkmann.com/">Florian Brinkmann</a></li>
+                <li><a href="https://maja-benke.de/">Maja Benke</a></li>
+                <li><a href="https://www.caroleolinger.com/">Carole Olinger</a></li>
+                <li><a href="https://licobi-design.de/">Birgit Olzem</a></li>
+                <li><a href="https://simon.blog/">Simon Kraft</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+<main>
+    <article>
+    <span class="category">lazywp</span>
+    <time datetime="21.05.2024T00:00:00+02:00" itemprop="datePublished">21.05.2024</time>
+    <h2>lazywp – A terminal user interface for wpcli</h2>
+    <p>I am using the terminal quite a lot. Lately I moved to neovim as my IDE of choice because it’s fast, comfortable (after some time settling in ofc) and portable. With switching my IDE to the terminal I wanted to discover other tools which could help me with my daily workflow. So I found <a href="https://github.com/jesseduffield/lazygit/">layzgit</a> and <a href="https://github.com/jesseduffield/lazydocker">lazydocker</a>, both developed by <a href="https://jesseduffield.com/">Jesse Duffield</a>. I don’t want to miss both in my system.</p>
+<p>As a WordPress developer I use <a href="https://wp-cli.org/de/">wpcli</a> a lot. I mean, how can I not? It’s one of the most useful tools for automation within the WordPress universe. But I also use it to manage some WordPress instances by hand. And I usually forget the <a href="https://developer.wordpress.org/cli/commands/">commands</a> and their operators. This is why I am building <a href="https://github.com/lauratheq/lazywp/">lazywp</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="lazywp - a tui for wpcli" src="assets/articles/lazywp.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><em>lazywp - a tui for wpcli</em></td>
+</tr>
+</tbody>
+</table>
+<p>Since I am doing this in my freetime the development of this project will take some time. As for now I am concentrating on the python module curses and get everything stable. The next steps I can identify are:</p>
+<ul>
+<li>Creating a flexible modal for some feedback messages</li>
+<li>A flexible modal with yes/no as selectable options</li>
+<li>A user input modal for installing plugins</li>
+</ul>
+<p>With that I have a basic system which can handle plugins. It’s something. I’ll keep track of the development in this blog.</p>
+</article>
+</main>
+        </div>
+
+    </body>
+</html>
+

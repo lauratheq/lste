@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Working-Directory - universum tonal – .wav</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="Working Directory is a personal development blog brought to you by Laura">
+        <meta name="keywords" content="wave, python">
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/highlight.min.css" />
+
+        <script src="assets/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+        <aside>
+    <div class="inner">
+        <div class="user-profile">
+            <div class="picture">
+                <img src="assets/img/laura.jpg">
+            </div>
+            <div class="data">
+                <p><strong>Working Directory</strong></p>
+                <p>Laura's dev log</p>
+            </div>
+        </div>
+    
+        <div class="widget navigation">
+            <p>meta</p>
+            <ul>
+                <li class="active" id="blog"><a href="index.html">blog</a></li>
+                <li id="contact"><a href="contact.html">contact / legal</a></li>
+                <li id="feed"><a href="feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="widget navigation">
+            <p>my projects</p>
+            <ul id="menu-projects" class="menu">
+                <li><a href="https://github.com/lauratheq/lazywp/">lazywp</a></li>
+                <li><a href="https://github.com/lauratheq/cauldron">Cauldron</a></li>
+                <li><a href="https://github.com/lauratheq/advanced-network-management">Advanced Network Management</a></li>
+                <li><a href="https://github.com/lauratheq/lste">Lauras Simple Template Engine</a></li>
+            </ul>
+        </div>
+    
+        <div class="widget navigation">
+            <p>blogroll</p>
+            <ul id="menu-blogroll" class="menu">
+                <li><a href="https://notiz.blog/">Matthias Pfefferle</a></li>
+                <li><a href="https://florianbrinkmann.com/">Florian Brinkmann</a></li>
+                <li><a href="https://maja-benke.de/">Maja Benke</a></li>
+                <li><a href="https://www.caroleolinger.com/">Carole Olinger</a></li>
+                <li><a href="https://licobi-design.de/">Birgit Olzem</a></li>
+                <li><a href="https://simon.blog/">Simon Kraft</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+<main>
+    <article>
+    <span class="category">Universum Tonal</span>
+    <time datetime="03.06.2022T00:00:00+02:00" itemprop="datePublished">03.06.2022</time>
+    <h2>universum tonal – .wav</h2>
+    <p>Coming back to my <a href="2022-05-29-universum-tonal-midi.md">image to midi</a> experiment I wanted to go a step further because I see several flaws with this midi-stuff. It’s neat to have midi files with what you can play with but there are flaws in my script. First of all there is the loss of information. A pixel on the y-axis with a fixed x value with identical properties of another pixel on the same axis will be ignored with my script. I don’t like this but with the limited capabilities of midi-files I am bound to certain decisions. Looking at the wave format I can do a lot more with overlapping frequencies, velocities, wave-forms, shapes and whatnot.</p>
+<p>So my goal in this experiment is find a method to generate wave files out of images – basically a reverse spectogram.</p>
+<p>So let’s dive into the waves (I’m sorry …)</p>
+<h3>The plan</h3>
+<p>Using wave files I have to many possiblities and opportunities that I have a lot more to decide. So let us look at an output of a wave file. I generated a second of noise with <a href="https://github.com/lauraherzog/universum-tonal/blob/main/tools/image-to-wave-noise.py">this script</a>. I wanted to know what it looks like visually to understand the data a little bit more so I used the tool <a href="https://synthtech.com/waveedit/">WaveEdit</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="WaveEdit with noise" src="assets/articles/image-to-wave-waveedit.png" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><em>WaveEdit with noise</em></td>
+</tr>
+</tbody>
+</table>
+<p>Looking at this we need to comprehend some stuff about wave files. First of all there is a framerate. This framerate determines how many frames per second are rendered. I used 44100 Hz in my script and therefore I have 172 frames per second. A couple of these frames can be seen on the left panel. On the right I can see a wave form made out of 256 ticks whereas I can set a point of a so called <a href="http://soundfile.sapp.org/doc/WaveFormat/">PCM values</a> for each tick as I want.</p>
+<p>I have several iterations planned with different settings and approaches. First I want to read the image pixel by pixel line by line from left to right and top to bottom where every pixel represents one tick. After that I want to read the image row by row using the pixels as heightmap and the last iteration will be a combination of all I know about wave files and pixels (more on that later). But first, let’s have some fun.</p>
+<p>For that experiment I want to use a different image – the ultra deep field from hubble.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><img alt="Image Credit: ESO - Ultra Deep Field" src="assets/articles/image-to-wave-udf.jpg" /></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><em>Image Credit: ESO – Ultra Deep Field</em></td>
+</tr>
+</tbody>
+</table>
+<h3>Pixel by Pixel</h3>
+<p>Different from the midi stuff in Wave I don’t have the possibility to use different channel for different notes – at least for now (I have ideas using the stereo and dolby channels later on). For this I want to be as simple as possible and build up from that. In this iteration I want to analyze each pixel, get the color (hue), convert it to a wave frequency (similar to the midi stuff) and set it as one tick.</p>
+<p>I set the resolution of the image to 512×512 pixel again. This results in 262144 pixels which ultimately translates to 5.94 seconds of, well, noise (I think). I don’t want to go into the details of <a href="https://github.com/lauraherzog/universum-tonal/blob/main/tools/image-to-wave-pp.py">the script</a> again but need to clarify some things. I accept a huge dataloss here because I only want to use the hue value of the pixel. I ignore saturation and lightness for the sake of simplicity.</p>
+<p>After my first test I get this as result (<a href="https://youtu.be/-WOAoghdU38">link to YouTube</a>).</p>
+<p>Bear with me, the representation of the current position of the soundwave and the marker don’t correlate correctly because I’m not good at video editing (and lazy). But this sounds basically what I thought it would sound like. It’s not a good representation of the image as audio though but it’s something.</p>
+<h3>pixel as frequency</h3>
+<p>So this is not an accurate representation of an image. I don’t know if I’ll get close to it whatsoever but I can implement a lot of more information in a wave file. Let’s take a look at one frame. With 44100 Hz as framerate one frame with 256 means roundabout 0,0058. seconds. If I now fill 172 frames with a simple sine wave at a certain frequency I get one second of a single note. Let’s stick to the sine wave for now and <a href="https://pythonnumericalmethods.berkeley.edu/notebooks/chapter24.01-The-Basics-of-waves.html">check what we can do with it</a> and what relation I can build up to the pixel information.</p>
+<p>I have these values for the pixel: hue, saturation, lightness. And I have these values from the sine wave: amplitude and wavelength. Stating the obvious – hue represents the wavelength of the sine wave. But that’s wrong and I show you why. Let us do a little experiment with the first pixel of our sample image.</p>
+<p>It got these values for HSV: H = 327, S = 42 and V = 10. The pixel in the image is really dark. I imagine that dark areas on an image should be in the bass section of the octave. Let’s asume H is equivalent to the frequency of a note: If H is 327 I get 7179 Hz as frequency. That’s in the <a href="https://pages.mtu.edu/~suits/notefreqs.html">area of A8</a> a very very high note. So obviously this doesn’t fit for a dark pixel.</p>
+<p>So I have to do some decisions:</p>
+<ol>
+<li>Dark pixel should be in the bass section of the sound spectrum. Therefore I use the V value as equivalent to the octave. I have nine full octaves available.</li>
+<li>Within one octave the H decides on the frequency.</li>
+<li>The saturation is equivalent to the amplitude of my sine wave between 0 and 1 (floating point).</li>
+</ol>
+<p>So with my test pixel and V = 10 I get the octave number 0. Octabe zero has frequencies available from 16.35 Hz to 30.87 Hz. With H = 327 I get 29 Hz as frequency of this pixel.</p>
+<p>I really don’t know if this decisions are smart but at least these are some decisions 🙂</p>
+<p>Okay, so let’s generate 262144 sine waves with <a href="https://github.com/lauraherzog/universum-tonal/blob/main/tools/image-to-wave-pf.py">this script</a> which will give me 67108864 frames which in the end will be 1521,74 seconds long which are 25 minutes … okay. I did it and you can take a listen (<a href="https://youtu.be/7dba0gebttw">YouTube-Link aigain</a>).</p>
+<h3>Three notes at the same time?</h3>
+<p>I am not happy where I am heading. So let’s rewind a bit and think what we actually can do and what I want. Looking at the midi files I envy the easy possibility to add two different notes at the same time on the same channel without much effort. If I have two notes I have to generate merged sine waves based on the frequencies I got from the pixel.</p>
+<p>Let’s try something first. I really like the B minor chord. For simplicity I just use the notes B, D and F# on the third octave. Converted to frequencies we got 246.94 Hz for B, 146.832 Hz for D and 185.00 for F#. Also I have a limited amplitude therefore I need to add or substract the PCM values of the sine wave to get the actuall tick values. Sounds complicated and luckily google helps me with the math of complex sound generation. With <a href="https://github.com/lauraherzog/universum-tonal/blob/main/tools/image-to-wave-chord.py">that script</a> I got two seconds of a B minor chord.</p>
+<p>With that knowledge I need to think about the image and pixel information again.</p>
+<h3>Row, row, row your boat</h3>
+<p>Now I really can play with this image and define what I want to do with the color information of each pixel in each row. First, I need to take a look at the pixel itself and then I need to look at the row and find relationships.</p>
+<ol>
+<li>As stated above the frequency will be generated with the lightness value in combination with the hue value.</li>
+<li>The saturation is equivalent to the amplitude.</li>
+<li>When having similar pixel in the row with the exact same frequency the saturation for the amplitude will be combined and calculated as relative amplitude to the sine wave. Initial the first pixel will get 50% of the amplitude. The rest is reserved for similar pixels in the row. If a pixel with the exact same properties occurs again their amplitude will be added relatively to the rest.</li>
+</ol>
+<p>With <a href="https://github.com/lauraherzog/universum-tonal/blob/main/tools/image-to-wave.py">this script</a> I am basically done. I generated my first wave file with this with a samplerate of 2048 and a framerate of 44100. Each second contains 21 rows (take or given) and results in 23 seconds of noise. And this is what it sounds like (<a href="https://youtu.be/hNu_M61NeAo">YouTube Link</a>).</p>
+<p>Well … wow I guess? Okay, there are flaws. The transition from row to row is rough and gives me periodical kicks. I don’t like that and currently I don’t know how to solve this. (If someone has an idea, let me know) Next thing: Black is heavy. This is a black image therefore I expect to have a lot of low notes and they add up. I’ve build in a switch to ignore frequencies below a certain point. In the next example I omitted frequencies below 65 Hz and used the same sample rate (<a href="https://youtu.be/W9DwrX_P5JM">YouTube Link</a>).</p>
+<p>That’s better. And way cooler than I expected. Next settings are a samplerate of 22050 (half a second per row) and ignored frequencies below 65 Hz (<a href="https://youtu.be/p-3jTZA7HUI">YouTube Link</a>).</p>
+<h3>Conclusion</h3>
+<p>With the possibility to do stuff with each frequency in the calculation of the sine waves I basically have build a synthesizer. Which is not what I thought is going to happen. And now my brain wants to build GUIs, knobs and parameters, equalizers, mixers and and and aaaaaaah. I could also use saw and square waves based on the octave and frequency. The possibilities are huge. My time is not. And I can see myself procrastinating everything with this which wouldn’t be good. Therefore I leave it here … for now.</p>
+<p>But this kick ...</p>
+</article>
+</main>
+        </div>
+
+    </body>
+</html>
+

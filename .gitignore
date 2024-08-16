@@ -1,0 +1,4 @@
+build
+.lsterc
+plugins
+__pycache__

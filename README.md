@@ -1,49 +1,49 @@
 # Lauras Simple Template Engine
 
-This script generates a website to ./dist out of the given template parts, the assets and the content itself. It is very simple, lightweight and its purpose is to handle very small websites.
+LSTE (Laura's Simple Template Engine) is a minimalist static site generator designed to help you quickly create and manage small websites with ease. LSTE allows you to build a complete website by combining template parts, assets, and content, all while keeping the process straightforward and lightweight.
 
-See `/example` for a simple website template
+* See `/example-simple` for a simple website template
+* See `/example-full` for a website template which uses several plugins (which basically is my [blog](https://working-directory.com))
 
 ## Usage
 
-**Make sure you have python3 installed.**
+**Make sure you have python3 and python3-markdown installed.**
 
 1. Clone this repository
-2. execute `./lste.py -p ./example -d ./dist` to generate a website into `./dist`
+2. execute `./lste.py --path=./example-simple` to generate a website into `./example-simple/dist`
 
 ```bash
 # NAME
 #   Lauras Simple Template Enginge - LSTE
 #
 # SYNOPSIS
-#   ./lste.py [--watch] [--path] [--destination]
+#   ./lste.py [--watch] [--path]
 #
 # DESCRIPTION
 #   This script generates a website to ./dist out of the given template
 #   parts, the assets and the content itself
 #
 # EXAMPLE:
-#   ./lste.py --path ./website-src --destination ./website
+#   ./lste.py --path=./website-src
 #
 # OPTIONS
 #   -p|--path         Sets the base directory for the website. If not setted
 #                     LSTE uses the current active directory
-#   -d|--destination  Sets the directory where the website is rendered to
 #   -w|--watch        Automatically generates the website to ./dist
 #                     if a file in /src, /assets or /parts changed
 ```
 
-Hint: You can also move the lste.py to your local bin directory to use it systemwide
+Hint: You can also link the lste.py to your local bin directory to use it systemwide
 
 ## Template Development
 
-This tutorial should help to setup a simple LSTE project:
+This guide should help to setup a simple LSTE project:
 
-1. Create a file `lste.conf` in an empty folder and fill it like so:
-2. Create the folders `./parts`, `./src` and `./assets`
-3. Place the actual pages in `./src`, like `index.html` or `about.html`
+1. Create a file `lste.conf` in an empty folder and fill it with some settings (see next chapter)
+2. Create the folders `./template`, `./content` and `./assets`
+3. Place the actual content in `./content`, like `index.md` or `about.md`. LSTE will generate `index.html` or `about.html` out of these files.
 4. Use the `./assets` folder for you stylesheets, images etc.
-5. Insert your template parts in the `./parts` folder
+5. Insert your template parts in the `./template` folder
 
 ### Site Data
 
@@ -52,47 +52,20 @@ The basic site data is stored in the `lste.conf`. It must have following content
 ```bash
 [lste]
 title = My LSTE Project
-meta-keywords = these, are, my, keywords
-meta-description = My very first LSTE project
+keywords = these, are, my, keywords
+description = My very first LSTE project
 ```
 
 These settings are the global settings and data of the project.
 
-Each file in `./src` can overwrite this meta data by placing these optional tags in the head of the file:
-
-```html
-<!-- [title: My LSTE Project] -->
-<!-- [meta-keywords: these, are, my, keywords] -->
-<!-- [meta-description: My very first LSTE project] -->
-```
-
 ### Template Parts
 
-The template parts are simple HTML-files. They can be included by the pages in `./src` and by the template parts themself.
+The template parts are simple HTML-files. LSTE needs two mandatory template files:
 
-The code snippet `<!-- [part: my-template-part] -->` allocates `my-template-part.html` in the `./parts` folder and includes its content.
+* `index.html`
+* `page.html`
 
-### Menu
-
-LSTE is relatively stupid and looks for certain simple patterns to determine what a menu is. For example you have a template part `sidebar.html` in `./parts` which looks like this:
-
-```html
-<ul>
-	<li id="home"><a href="index.html">Homepage</a></li>
-	<li id="first-link"><a href="first-link.html">1st Link</a></li>
-	<li id="second-link"><a href="second-link.html">2nd Link</a></li>
-	<li id="third-link"><a href="third-link.html">3rd Link</a></li>
-	<li id="fourth-link"><a href="fourth-link.html">4th Link</a></li>
-</ul>
-```
-
-If you are working on the `second-link.html` site and want the corresponding menu item to have a css-class `active` simply put following code into the head of your page in `./src`:
-
-```html
-<!-- [active-menu-entry: second-link] -->
-```
-
-The value `none` will ignore the menu settings and nothing will be highlighted. Or simply don't use this line in your site.
+The code snippet `{{part: my-template-part.html}}` allocates `my-template-part.html` in the `./template` folder and includes its content. See `example-simple` for an example.
 
 ### Assets
 
@@ -102,20 +75,54 @@ LSTE has no further configuration for the assets folder. It simply copies all it
 
 There are built-in functions which display different kind of information
 
-* `<!-- [func: title] -->`: Renders the title given by the page in `./src` with the tag `<!-- [title: My LSTE Project] -->` or loads it from the config file
-* `<!-- [func: meta-keywords] -->`: Renders the meta keywords given by the page in `./src` with the tag `<!-- [meta-keywords: My very first LSTE project] -->` or loads it from the config file
-* * `<!-- [func: meta-description] -->`: Renders the meta description given by the page in `./src` with the tag `<!-- [meta-description: My very first LSTE project] -->` or loads it from the config file
-* `<!-- [func: timestamp] -->`: Renders a unix timestamp when the page was generated by LSTE
+* `{{title}}`: Renders the title
+* `{{keywords}}`: Renders the meta keywords
+* `{{meta-description}}`: Renders the meta description
+* `{{timestamp}}`: Renders a unix timestamp when the page was generated by LSTE
 
 ## The `--watch` argument
 
-You can start LSTE with the argument `--watch` (or `-w`). It automatically checks for modifications in the folders `./src`, `./parts`, `./assets` and the `lste.conf` file. If anything changes there or a file is added, the website will be generated automatically.
+You can start LSTE with the argument `--watch` (or `-w`). It automatically checks for modifications in the folders `./template`, `./content`, `./assets` and the `lste.conf` file. If anything changes there or a file is added, the website will be generated automatically.
 
 ```bash
-./lste.py -p ./example -d ./dist --watch
+./lste.py --path=./example --watch
 ```
 
 Starts the watcher for the `./example` project.
+
+## Plugins
+
+LSTE itself is very limited in its functionality but it comes with a plugin system which allows expanding everything in LSTE.
+
+### Currated Plugins
+
+Currently there are following currated plugins available:
+
+* [Meta](https://github.com/lauratheq/meta.lste) allows the usage of meta fields throught an LSTE project
+* [Active Menu](https://github.com/lauratheq/active-menu.lste) which allows to indicate which menu entry should be active
+* [Articles](https://github.com/lauratheq/articles.lste) enables a blog like content management
+* [Excerpts Markdown](https://github.com/lauratheq/excerpts-markdown.lste) enables markdown rendering for excerpts
+* [RSS](https://github.com/lauratheq/rss.lste) generates an RSS-Feed out of the articles.
+
+See the readmes on the plugins for more information about their functionality.
+
+### Using plugins
+
+Using plugins in LSTE is fairly easy:
+
+1. Create a file in your home directory called `.listerc`
+2. Place the content for the plugins into it whereas the value is the shortened address of the plugin on github:
+
+```
+[plugins]
+active-menu = lauratheq/active-menu.lste
+meta = lauratheq/meta.lste
+articles = lauratheq/articles.lste
+excerpts-markdown = lauratheq/excerpts-markdown.lste
+rss = lauratheq/rss.lste
+```
+
+And that's it. LSTE will download the plugins with the next page generation.
 
 ## Contributing
 

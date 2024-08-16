@@ -1,0 +1,130 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
+        <channel>
+            <title>Working Directory</title>
+            <atom:link href="https://working-directory.com/rss.xml" rel="self" type="application/rss+xml"/>
+            <link>https://working-directory.com</link>
+            <description>Working Directory is a personal development blog brought to you by Laura</description>
+            <lastBuildDate>Fri, 16 Aug 2024 05:21:33 +0000</lastBuildDate>
+            <language>en-EN</language>
+            <generator>LSTE 0.2</generator>
+            <sy:updatePeriod>hourly</sy:updatePeriod>
+            <sy:updateFrequency>1</sy:updateFrequency>
+            <managingEditor>laura@working-directory.com (Laura)</managingEditor>
+            <webMaster>laura@working-directory.com (Laura)</webMaster>
+            <image>
+                <url>https://working-directory.com/assets/img/laura.jpg</url>
+                <title>Working Directory</title>
+                <link>https://working-directory.com</link>
+                <width>32</width>
+                <height>32</height>
+            </image>
+            <item>
+                <title>WordPress-like Hook System in Python</title>
+                <link>https://working-directory.com/2024-08-02-wordpress-like-hook-system-in-python.html</link>
+                <pubDate>Fri, 02 Aug 2024 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2024-08-02-wordpress-like-hook-system-in-python.html</guid>
+                <description>One of WordPress’s standout features is its Hook System, which allows developers to execute actions and filter variables seamlessly. Inspired by this, I decided to implement a similar plugin system within my Python tools. To my surprise, the process was remarkably straightforward.</description>
+                <content:encoded>
+                    <![CDATA[ One of WordPress’s standout features is its Hook System, which allows developers to execute actions and filter variables seamlessly. Inspired by this, I decided to implement a similar plugin system within my Python tools. To my surprise, the process was remarkably straightforward. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>Rewriting LazyWP: Lessons from the First Overhaul</title>
+                <link>https://working-directory.com/2024-06-12-rewriting-lazywp-lessons-from-the-first-overhaul.html</link>
+                <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2024-06-12-rewriting-lazywp-lessons-from-the-first-overhaul.html</guid>
+                <description>A couple of weeks ago, I embarked on a journey to develop LazyWP, a tool that leverages curses and Python to create a terminal user interface for WordPress users. As any developer knows, the first iteration of a software project is rarely perfect, and mine was no exception. After some initial development, I found myself at a crossroads that many developers face: it was time for a rewrite.</description>
+                <content:encoded>
+                    <![CDATA[ A couple of weeks ago, I embarked on a journey to develop LazyWP, a tool that leverages curses and Python to create a terminal user interface for WordPress users. As any developer knows, the first iteration of a software project is rarely perfect, and mine was no exception. After some initial development, I found myself at a crossroads that many developers face: it was time for a rewrite. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>Message boxes in lazywp</title>
+                <link>https://working-directory.com/2024-05-24-message-boxes-in-lazywp.html</link>
+                <pubDate>Fri, 24 May 2024 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2024-05-24-message-boxes-in-lazywp.html</guid>
+                <description>I pushed my current state into the main branch of lazywp. It doesn’t seem like much but I can now trigger a message box with a simple command and have an option to answer yes and no questions.</description>
+                <content:encoded>
+                    <![CDATA[ I pushed my current state into the main branch of lazywp. It doesn’t seem like much but I can now trigger a message box with a simple command and have an option to answer yes and no questions. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>lazywp – A terminal user interface for wpcli</title>
+                <link>https://working-directory.com/2024-05-21-lazywp-a-terminal-user-interface-for-wpcli.html</link>
+                <pubDate>Tue, 21 May 2024 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2024-05-21-lazywp-a-terminal-user-interface-for-wpcli.html</guid>
+                <description>I am using the terminal quite a lot. Lately I moved to neovim as my IDE of choice because it’s fast, comfortable (after some time settling in ofc) and portable. With switching my IDE to the terminal I wanted to discover other tools which could help me with my daily workflow. So I found layzgit and lazydocker, both developed by Jesse Duffield. I don’t want to miss both in my system.</description>
+                <content:encoded>
+                    <![CDATA[ I am using the terminal quite a lot. Lately I moved to neovim as my IDE of choice because it’s fast, comfortable (after some time settling in ofc) and portable. With switching my IDE to the terminal I wanted to discover other tools which could help me with my daily workflow. So I found layzgit and lazydocker, both developed by Jesse Duffield. I don’t want to miss both in my system. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>Where did all the blogrolls go? #reviveBlogrolls</title>
+                <link>https://working-directory.com/2024-04-29-where-did-all-the-blogrolls-go.html</link>
+                <pubDate>Mon, 29 Apr 2024 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2024-04-29-where-did-all-the-blogrolls-go.html</guid>
+                <description>Writing this makes me feel like a boomer. Working on this blog made me realize how much the self-publishing evolved over time. This is my first blog since 2018 and it seems like that since this time the “internet” moved more and more to apps and platforms where content creators don’t own their content anymore. And I realize that I am also part of this development. Creating this blog means that I want to change this. I want to give the web back to me. I want to own my content. And I want to enable others how to do this. That’s basically the goal of this blog; writing about technology.</description>
+                <content:encoded>
+                    <![CDATA[ Writing this makes me feel like a boomer. Working on this blog made me realize how much the self-publishing evolved over time. This is my first blog since 2018 and it seems like that since this time the “internet” moved more and more to apps and platforms where content creators don’t own their content anymore. And I realize that I am also part of this development. Creating this blog means that I want to change this. I want to give the web back to me. I want to own my content. And I want to enable others how to do this. That’s basically the goal of this blog; writing about technology. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>universum tonal – .wav</title>
+                <link>https://working-directory.com/2022-06-03-universum-tonal-wav.html</link>
+                <pubDate>Fri, 03 Jun 2022 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2022-06-03-universum-tonal-wav.html</guid>
+                <description>Coming back to my image to midi experiment I wanted to go a step further because I see several flaws with this midi-stuff. It’s neat to have midi files with what you can play with but there are flaws in my script. First of all there is the loss of information. A pixel on the y-axis with a fixed x value with identical properties of another pixel on the same axis will be ignored with my script. I don’t like this but with the limited capabilities of midi-files I am bound to certain decisions. Looking at the wave format I can do a lot more with overlapping frequencies, velocities, wave-forms, shapes and whatnot.</description>
+                <content:encoded>
+                    <![CDATA[ Coming back to my image to midi experiment I wanted to go a step further because I see several flaws with this midi-stuff. It’s neat to have midi files with what you can play with but there are flaws in my script. First of all there is the loss of information. A pixel on the y-axis with a fixed x value with identical properties of another pixel on the same axis will be ignored with my script. I don’t like this but with the limited capabilities of midi-files I am bound to certain decisions. Looking at the wave format I can do a lot more with overlapping frequencies, velocities, wave-forms, shapes and whatnot. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>universum tonal – .midi</title>
+                <link>https://working-directory.com/2022-05-29-unversum-tonal-midi.html</link>
+                <pubDate>Sun, 29 May 2022 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2022-05-29-unversum-tonal-midi.html</guid>
+                <description>Ya, okay, I got sidetracked. Actually I got some drafts laying around with topics about other stuff but I can’t really bother myself now to examine and plan the todos and stuff for this. Currently I am browsing a lot within the topic of sonification. There’s a really cool book I found and there’s so much stuff going on in the astronomy world (like EHT) that I really can’t keep track with everything – especially not with my own project. But with the new image of Sagittarius A* I got some inspiration on experimenting on stuff.</description>
+                <content:encoded>
+                    <![CDATA[ Ya, okay, I got sidetracked. Actually I got some drafts laying around with topics about other stuff but I can’t really bother myself now to examine and plan the todos and stuff for this. Currently I am browsing a lot within the topic of sonification. There’s a really cool book I found and there’s so much stuff going on in the astronomy world (like EHT) that I really can’t keep track with everything – especially not with my own project. But with the new image of Sagittarius A* I got some inspiration on experimenting on stuff. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>universum tonal – .init</title>
+                <link>https://working-directory.com/2022-02-21-universum-tonal-init.html</link>
+                <pubDate>Mon, 21 Feb 2022 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2022-02-21-universum-tonal-init.html</guid>
+                <description>This is the very first entry in the blog for an project currently called “Universum Tonal”. This repository is an experiment to document the development of a concept album with music made from the sounds of the universe. The goal is to extract the radio waves of certain celestial objects convert them into sounds, wave tables and samples which will be used in samplers, mixers and synthesizers to create an eight-track album.</description>
+                <content:encoded>
+                    <![CDATA[ This is the very first entry in the blog for an project currently called “Universum Tonal”. This repository is an experiment to document the development of a concept album with music made from the sounds of the universe. The goal is to extract the radio waves of certain celestial objects convert them into sounds, wave tables and samples which will be used in samplers, mixers and synthesizers to create an eight-track album. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>[Update] WordCamp "Roots"</title>
+                <link>https://working-directory.com/2018-06-25-wordcamp-roots.html</link>
+                <pubDate>Mon, 25 Jun 2018 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2018-06-25-wordcamp-roots.html</guid>
+                <description>Dieses Jahr gab es ja schon einige Kracher in der WordPress-Community: das großartige WordCamp Retreat in Soltau und das WordCamp Europe in Belgrad (bei welchem ich leider nicht dabei war). Bei Letzterem wurde unter anderem bekannt gegeben, dass das nächste WordCamp Europe in Berlin 2019 statt finden wird. Eine ziemlich große Sache, welche zumindest in der deutschen Szene kaum Platz bietet, andere Camps zu organisieren, da wohl die meiste Kraft dort investiert wird – zu Recht.</description>
+                <content:encoded>
+                    <![CDATA[ Dieses Jahr gab es ja schon einige Kracher in der WordPress-Community: das großartige WordCamp Retreat in Soltau und das WordCamp Europe in Belgrad (bei welchem ich leider nicht dabei war). Bei Letzterem wurde unter anderem bekannt gegeben, dass das nächste WordCamp Europe in Berlin 2019 statt finden wird. Eine ziemlich große Sache, welche zumindest in der deutschen Szene kaum Platz bietet, andere Camps zu organisieren, da wohl die meiste Kraft dort investiert wird – zu Recht. ]]>
+                </content:encoded>
+            </item>
+            <item>
+                <title>#WCRetreat – Die Zukunft muss sozial werden</title>
+                <link>https://working-directory.com/2018-04-14-wcretreat-die-zukunft-muss-sozial-werden.html</link>
+                <pubDate>Sat, 14 Apr 2018 00:00:00 +0000</pubDate>
+                <author>laura@working-directory.com (Laura)</author>
+                <guid isPermaLink="true">https://working-directory.com/2018-04-14-wcretreat-die-zukunft-muss-sozial-werden.html</guid>
+                <description>Nachdem nun das erste Retreat ein kleines bisschen Geschichte innerhalb der Community geschrieben hat, muss natürlich auch die Aufarbeitung folgen – vor allem mit den negativen Aspekten. Letztendlich gibt es nur einen negativen Punkt, welcher aber ziemlich Gewicht hat: Geld.</description>
+                <content:encoded>
+                    <![CDATA[ Nachdem nun das erste Retreat ein kleines bisschen Geschichte innerhalb der Community geschrieben hat, muss natürlich auch die Aufarbeitung folgen – vor allem mit den negativen Aspekten. Letztendlich gibt es nur einen negativen Punkt, welcher aber ziemlich Gewicht hat: Geld. ]]>
+                </content:encoded>
+            </item></channel></rss>

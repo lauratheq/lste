@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Working-Directory - WordPress-like Hook System in Python</title>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="language" content="English">
+        <meta name="description" content="Working Directory is a personal development blog brought to you by Laura">
+        <meta name="keywords" content="wordpress, python">
+
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/highlight.min.css" />
+
+        <script src="assets/js/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+    <body>
+        <div class="wrapper">
+
+        <aside>
+    <div class="inner">
+        <div class="user-profile">
+            <div class="picture">
+                <img src="assets/img/laura.jpg">
+            </div>
+            <div class="data">
+                <p><strong>Working Directory</strong></p>
+                <p>Laura's dev log</p>
+            </div>
+        </div>
+    
+        <div class="widget navigation">
+            <p>meta</p>
+            <ul>
+                <li class="active" id="blog"><a href="index.html">blog</a></li>
+                <li id="contact"><a href="contact.html">contact / legal</a></li>
+                <li id="feed"><a href="feed.xml">RSS Feed</a></li>
+            </ul>
+        </div>
+
+        <div class="widget navigation">
+            <p>my projects</p>
+            <ul id="menu-projects" class="menu">
+                <li><a href="https://github.com/lauratheq/lazywp/">lazywp</a></li>
+                <li><a href="https://github.com/lauratheq/cauldron">Cauldron</a></li>
+                <li><a href="https://github.com/lauratheq/advanced-network-management">Advanced Network Management</a></li>
+                <li><a href="https://github.com/lauratheq/lste">Lauras Simple Template Engine</a></li>
+            </ul>
+        </div>
+    
+        <div class="widget navigation">
+            <p>blogroll</p>
+            <ul id="menu-blogroll" class="menu">
+                <li><a href="https://notiz.blog/">Matthias Pfefferle</a></li>
+                <li><a href="https://florianbrinkmann.com/">Florian Brinkmann</a></li>
+                <li><a href="https://maja-benke.de/">Maja Benke</a></li>
+                <li><a href="https://www.caroleolinger.com/">Carole Olinger</a></li>
+                <li><a href="https://licobi-design.de/">Birgit Olzem</a></li>
+                <li><a href="https://simon.blog/">Simon Kraft</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+
+<main>
+    <article>
+    <span class="category">Python</span>
+    <time datetime="02.08.2024T00:00:00+02:00" itemprop="datePublished">02.08.2024</time>
+    <h2>WordPress-like Hook System in Python</h2>
+    <p>One of WordPress’s standout features is its Hook System, which allows developers to execute actions and filter variables seamlessly. Inspired by this, I decided to implement a similar plugin system within my Python tools. To my surprise, the process was remarkably straightforward.</p>
+<p>If you want to skip the explaination and just want to see the full implementation just follow this <a href="https://gist.github.com/lauratheq/ef6adfc57cfba93d9d7c98a1b90843a6">link to the gist</a>.</p>
+<h2>Understanding Hooks: A Practical Example</h2>
+<p>In programming, hooks are powerful tools that allow we to extend or modify the behavior of a system without altering its core code. Let’s dive into how this concept can be applied in Python with a practical example.</p>
+<p>Consider the fdummy function, which contains a title:</p>
+<pre><code>def get_title(self):
+    title = &quot;Foobar&quot;
+    return title
+
+title = get_title
+</code></pre>
+<p>In this setup, the <code>title</code> variable is assigned a value from the <code>get_title</code> function. However, as it stands, there’s no way to manipulate or extend the value of title beyond the default implementation.</p>
+<p>This is where hooks come into play. With a hook system, we can insert custom functions to modify or enhance the behavior of existing methods. For example, we could create a hook that allows external code to change the title before it's set, adding flexibility and customization options to our class.</p>
+<h2>The anatomy of a hook</h2>
+<p>In a hook system, each hook comprises three fundamental components: the name, the callback function, and the priority:</p>
+<h3>1. Name of the Hook</h3>
+<p>The name of a hook acts as an identifier or label. It allows us to group and manage related hooks under a common name. This is particularly useful if we want to apply or execute all hooks associated with a specific functionality. For example, if we have multiple ways to modify a title, we might name our hooks "modify-title".</p>
+<h3>2. Callback Function</h3>
+<p>The callback function is the heart of the hook. It contains the logic that should be executed when the hook is triggered. Callbacks can be used to modify values, perform actions, or integrate additional functionality. When we register a hook, we specify the callback function that will be called with the hook’s parameters.</p>
+<p>For instance, a callback might take an initial value and some additional arguments to transform the value:</p>
+<pre><code>def modify_title(value, extra_arg):
+    return f&quot;{value} - {extra_arg}&quot;
+</code></pre>
+<h3>3. Priority</h3>
+<p>The priority determines the order in which hooks are executed. Hooks with lower priority values are executed before those with higher values. This allows us to control the sequence of operations, ensuring that hooks affecting the same variable or process are applied in a specific order.</p>
+<p>For example, if we have two hooks that modify a title, we might set different priorities to control which modification happens first. If the priority is the same in each hook, we execute it by what comes first:</p>
+<pre><code>hooks.add(&quot;modify-title&quot;, modify_title, priority=5)
+hooks.add(&quot;modify-title&quot;, another_callback, priority=10)
+</code></pre>
+<p>In this setup, <code>modify_title</code> will be applied before <code>another_callback</code> because it has a lower priority value.</p>
+<h3>Putting It All Together</h3>
+<p>When we register a hook, we combine these three elements to create a mechanism that can be executed or applied later. Here’s a quick example of how a hook is defined and used:</p>
+<pre><code>def example_callback(value, extra_arg):
+    return f&quot;{value} modified with {extra_arg}&quot;
+
+hooks.add(&quot;example-hook&quot;, example_callback, priority=5)
+</code></pre>
+<p>In this case:</p>
+<ul>
+<li><strong>Name:</strong> "example-hook"</li>
+<li><strong>Callback:</strong> example_callback</li>
+<li><strong>Priority:</strong> 5</li>
+</ul>
+<p>When we apply this hook with an initial value, the <code>example_callback</code> function will be executed with the provided arguments, modifying the value according to its logic and priority.</p>
+<h2>Implementation of the Hook-Class: the add method</h2>
+<p>The <code>Hooks</code> class is designed to manage and organize hooks efficiently. Here’s how it achieves this using Python’s built-in data structures:</p>
+<h3>1. Data Structure:</h3>
+<p>The class uses a dictionary named hooks to store hooks. The structure is as follows:</p>
+<pre><code>hooks: Dict[int, List[Dict[str, Any]]] = {}
+</code></pre>
+<ul>
+<li><strong>Key:</strong> The keys in the hooks dictionary are integers representing the priority of the hooks.</li>
+<li><strong>Value:</strong> The values are lists of dictionaries. Each dictionary represents a hook and contains the following details:</li>
+<li><strong>'name':</strong> The name of the hook (a string).</li>
+<li><strong>'callback':</strong> The function to be called when the hook is triggered (a callable).</li>
+<li><strong>'priority':</strong> The priority of the hook (an integer).</li>
+</ul>
+<h3>2. Initialization:</h3>
+<p>In the <code>__init__</code> method, the hooks dictionary is initialized as an empty dictionary:</p>
+<pre><code>def __init__(self):
+    self.hooks = {}
+</code></pre>
+<p>This sets up a fresh instance of the Hooks class with no hooks registered initially.</p>
+<h3>3. Adding Hooks:</h3>
+<p>When we add a hook using the add method, the hook is stored in the hooks dictionary based on its priority:</p>
+<pre><code>def add(self, name: str, callback: Callable[..., Any], priority: int = 10) -&gt; None:
+    hook = {
+        'name': name,
+        'callback': callback,
+        'priority': priority
+    }
+    if priority in self.hooks:
+        self.hooks[priority].append(hook)
+    else:
+        self.hooks[priority] = [hook]
+</code></pre>
+<p>Here’s a step-by-step breakdown of this method:</p>
+<ol>
+<li>Creating a Hook Dictionary:</li>
+<li>A hook is defined as a dictionary with 'name', 'callback', and 'priority' keys.
+Storing the Hook:</li>
+<li>The if priority in self.hooks check determines if there are already hooks with the specified priority.</li>
+<li>If hooks with this priority exist, the new hook is appended to the existing list.</li>
+<li>If no hooks with this priority exist, a new list is created with the new hook as its first item.</li>
+</ol>
+<h2>Implementation of the Hook-Class: the apply method</h2>
+<p>The apply method in the Hooks class is responsible for applying all registered hooks with a specific name to an initial value. Here's how it works:</p>
+<pre><code>def apply(self, hook_name: str, initial_value: Any, *args, **kwargs) -&gt; Any:
+    sorted_priorities = sorted(self.hooks.keys())
+    value = initial_value
+
+    for priority in sorted_priorities:
+        for hook in self.hooks[priority]:
+            if hook['name'] == hook_name:
+                callback = hook['callback']
+                # Get the number of arguments the callback expects
+                num_args = callback.__code__.co_argcount - 1  # Subtract 1 for 'self'
+                # Call the callback with the current value and any additional arguments
+                if num_args == 1:  # Only one additional argument expected
+                    value = callback(value, *args[:num_args], **kwargs)
+                elif num_args &gt; 1:  # Multiple additional arguments expected
+                    value = callback(value, *args[:num_args], **kwargs)
+                else:  # No additional arguments expected
+                    value = callback(value)
+
+    return value
+</code></pre>
+<h3>Sorting Priorities:</h3>
+<pre><code>sorted_priorities = sorted(self.hooks.keys())
+</code></pre>
+<p>Hooks are organized by priority, and the priorities are sorted in ascending order. This ensures that hooks with lower priority values are executed first.</p>
+<h3>Initializing the Value:</h3>
+<pre><code>value = initial_value
+</code></pre>
+<p>The <code>initial_value</code> is set to the value variable, which will be modified by the hooks.</p>
+<h3>Iterating Through Priorities and Hooks:</h3>
+<pre><code>for priority in sorted_priorities:
+    for hook in self.hooks[priority]:
+        if hook['name'] == hook_name:
+            callback = hook['callback']
+</code></pre>
+<p>The method iterates over each priority level in ascending order. For each priority, it checks all hooks.
+It then filters the hooks to find those that match the specified <code>hook_name</code>.</p>
+<h3>Determining the Number of Arguments:</h3>
+<pre><code>num_args = callback.__code__.co_argcount - 1
+</code></pre>
+<p>The number of arguments expected by the callback function is determined using <code>callback.__code__.co_argcount</code>, minus one to account for the implicit self parameter in instance methods.</p>
+<h3>Calling the Callback Function:</h3>
+<p><em>Single Argument Case:</em></p>
+<pre><code>if num_args == 1:
+    value = callback(value, *args[:num_args], **kwargs)
+</code></pre>
+<p>If the callback expects only one additional argument, the method calls it with the current value and any additional arguments provided.</p>
+<p><em>Multiple Arguments Case:</em></p>
+<pre><code>elif num_args &gt; 1:
+    value = callback(value, *args[:num_args], **kwargs)
+</code></pre>
+<p>If the callback expects multiple arguments, it calls the callback similarly, handling the expected number of arguments`</p>
+<p><em>No Additional Arguments:</em></p>
+<pre><code>else:
+    value = callback(value)
+</code></pre>
+<p>If the callback does not expect additional arguments, it is called with just the current value. After all applicable hooks have been executed, the final modified value is returned.</p>
+<p>Why This Method Is Useful:</p>
+<ul>
+<li>Sequential Application: By processing hooks in order of their priority, the method ensures that hooks with higher importance (lower priority values) are applied first.</li>
+<li>Flexible Callback Execution: The method dynamically handles callbacks with varying numbers of arguments, making it adaptable to different hook implementations.</li>
+<li>Value Transformation: This approach allows us to progressively transform an initial value through a series of hooks, enabling complex modifications in a controlled manner.</li>
+</ul>
+<h2>Example Usage</h2>
+<p>And that's basically everything we need. Let’s apply this to our example:</p>
+<pre><code>from hooks import Hooks
+
+# Define a callback function to modify the title
+def modify_title(value, extra_arg):
+    return f&quot;{value} - {extra_arg}&quot;
+
+# Create an instance of the Hooks class
+hooks = Hooks()
+
+# Add a hook with a specific priority
+hooks.add(&quot;modify-title&quot;, modify_title, priority=5)
+
+# Apply hooks to modify an initial value
+result = hooks.apply(&quot;modify-title&quot;, &quot;Original Title&quot;, &quot;Extra Info&quot;)
+print(result)  # Output: &quot;Original Title - Extra Info&quot;
+</code></pre>
+<ul>
+<li><strong>Adding Hooks:</strong> The add method registers hooks by specifying their name, callback function, and priority. Hooks with lower priority values are executed first.</li>
+<li><strong>Applying Hooks:</strong> The apply method executes all hooks with the given name, modifying an initial value based on their priority. This is useful for transforming data before final use.</li>
+<li><strong>Executing Hooks:</strong> The exec method triggers all hooks with the specified name, allowing them to perform actions in the order of their priority.</li>
+</ul>
+<p>If you want to play with that system, you can find the whole class in this <a href="https://gist.github.com/lauratheq/ef6adfc57cfba93d9d7c98a1b90843a6">gist</a>.</p>
+</article>
+</main>
+        </div>
+
+    </body>
+</html>
+
