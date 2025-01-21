@@ -31,6 +31,7 @@ from src.plugins import Plugins
 from src.hooks import Hooks
 import markdown
 
+
 class LSTE:
     """
     Main LSTE Class for managing and generating a static website.
@@ -61,44 +62,45 @@ class LSTE:
     Methods:
         __init__() -> None:
             Initializes the LSTE instance by setting up helpers, loading configuration files,
-            initializing plugins, and loading templates and content. It starts the file watcher 
+            initializing plugins, and loading templates and content. It starts the file watcher
             if the `--watch` option is set, otherwise renders and saves the website.
 
         init_opts() -> None:
-            Parses command-line options and sets the base directory for the website. Updates paths 
-            based on the `--path` option if provided, and sets the `run_watcher` flag based on 
+            Parses command-line options and sets the base directory for the website. Updates paths
+            based on the `--path` option if provided, and sets the `run_watcher` flag based on
             the presence of the `--watch` option.
 
         load_templates() -> None:
-            Loads all template files from the template directory into memory. Applies the 'templates' 
+            Loads all template files from the template directory into memory. Applies the 'templates'
             hook to modify the loaded templates.
 
         load_content() -> None:
-            Loads all content files from the content directory into memory. Extracts content, title, 
+            Loads all content files from the content directory into memory. Extracts content, title,
             and excerpt from each file. Applies the 'load_content' hook to modify the loaded content.
 
         render_site() -> None:
-            Renders the website by applying templates and custom functions to the content. Processes 
-            each content file, applies templates, and performs custom function replacements. 
+            Renders the website by applying templates and custom functions to the content. Processes
+            each content file, applies templates, and performs custom function replacements.
             Applies the 'after_render_content' hook.
 
         load_template_file(template_file_name: str) -> str:
-            Loads a template file and processes any included parts. Replaces template part references 
+            Loads a template file and processes any included parts. Replaces template part references
             within the content.
 
         load_template_parts(content: str) -> str:
             Loads and replaces template part references within a given template content.
 
         load_custom_functions(html: str) -> str:
-            Applies custom functions to the rendered HTML, including setting the title, keywords, 
+            Applies custom functions to the rendered HTML, including setting the title, keywords,
             description, and timestamp.
 
         save_site() -> None:
-            Saves the rendered site content to the `dist` directory. Clears the directory, copies assets, 
+            Saves the rendered site content to the `dist` directory. Clears the directory, copies assets,
             and writes HTML files for each rendered content item.
     """
-    version = '0.2'
-    
+
+    version = "0.2"
+
     base_path = os.getcwd()
     content_path = os.getcwd() + "/content"
     template_path = os.getcwd() + "/template"
@@ -115,8 +117,8 @@ class LSTE:
     file_stack = {}
     run_watcher = False
 
-    brackets_start = '{{'
-    brackets_end = '}}'
+    brackets_start = "{{"
+    brackets_end = "}}"
 
     rcfile = None
     hooks = None
@@ -142,7 +144,7 @@ class LSTE:
 
         # if the user didn't provide a lste.conf for the project
         # we consider this run as failed and nothing will be called
-        self.config_file = self.helpers.load_config(self.base_path + '/lste.conf')
+        self.config_file = self.helpers.load_config(self.base_path + "/lste.conf")
         if self.config_file == False:
             print("No lste file found in this project.")
             sys.exit()
@@ -152,12 +154,12 @@ class LSTE:
 
         # set basic modules
         self.hooks = Hooks()
-        plugins = Plugins(self.rcfile)
+        plugins = Plugins(self.config_file)
         self.plugins = plugins.init_plugins(self)
         plugins.load_plugins(self)
 
         # first hook for the plugins here
-        self = self.hooks.apply('plugins_loaded', self)
+        self = self.hooks.apply("plugins_loaded", self)
 
         # load all the needed data
         self.load_templates()
@@ -209,17 +211,17 @@ class LSTE:
         """
         files = os.listdir(self.template_path)
         for file in files:
-            filepath = self.template_path + '/' + file
+            filepath = self.template_path + "/" + file
             with open(filepath) as handle:
                 content = handle.read()
             self.templates[file] = content
 
-        self.templates = self.hooks.apply('templates', self.templates)
+        self.templates = self.hooks.apply("templates", self.templates)
 
     def load_content(self) -> None:
         """
         Loads all content files from the content directory into memory.
-        Extracts content, title, and excerpt from each file. Applies the 'load_content' hook 
+        Extracts content, title, and excerpt from each file. Applies the 'load_content' hook
         to modify the loaded content.
 
         Returns:
@@ -227,7 +229,7 @@ class LSTE:
         """
         files = os.listdir(self.content_path)
         for file in files:
-            filepath = self.content_path + '/' + file
+            filepath = self.content_path + "/" + file
 
             # skip folders
             if os.path.isdir(filepath):
@@ -238,17 +240,19 @@ class LSTE:
 
             # extract content
             self.content[file] = {}
-            self.content[file]['content'] = content
+            self.content[file]["content"] = content
 
             # excerpt
-            self.content[file]['excerpt'] = self.helpers.extract_excerpt(content)
+            self.content[file]["excerpt"] = self.helpers.extract_excerpt(content)
 
             # basic content
-            content_pattern = r'^(#+)\s*(.*)$'
-            self.content[file]['content'] = re.sub(content_pattern, '', content, count=1, flags=re.MULTILINE)
-            self.content[file]['title'] = self.helpers.extract_title(content)
+            content_pattern = r"^(#+)\s*(.*)$"
+            self.content[file]["content"] = re.sub(
+                content_pattern, "", content, count=1, flags=re.MULTILINE
+            )
+            self.content[file]["title"] = self.helpers.extract_title(content)
 
-        self.content = self.hooks.apply('load_content', self.content, self)
+        self.content = self.hooks.apply("load_content", self.content, self)
 
     def render_site(self) -> None:
         """
@@ -261,54 +265,70 @@ class LSTE:
         """
         # pre render
         for file in self.content:
-            print(f'Rendering template for: {file}')
+            print(f"Rendering template for: {file}")
 
             # render the file content
-            file_content = self.content[file]['content']
+            file_content = self.content[file]["content"]
 
             # some content maybe doesn't want to have markdown enabled
-            if 'skip_markdown' in self.content[file]:
+            if "skip_markdown" in self.content[file]:
                 file_content_rendered = file_content
             else:
-                file_content_rendered = markdown.markdown(file_content, extensions=['fenced_code', 'tables'])
+                file_content_rendered = markdown.markdown(
+                    file_content, extensions=["fenced_code", "tables"]
+                )
             self.content_rendered[file] = file_content_rendered
 
             # load the base template and then recursively the parts
-            self.prerendered_html[file] = self.load_template_file('index.html')
+            self.prerendered_html[file] = self.load_template_file("index.html")
 
         # hook right before the custom functions which has potential
         # to overwrite certain template variables
-        self = self.hooks.apply('pre_render_content', self)
+        self = self.hooks.apply("pre_render_content", self)
 
         # render the prerendered_html with the builtin functions
         for file in self.prerendered_html:
 
             # set the template
-            if 'template' in self.content[file]:
-                single_template_file = self.templates[self.content[file]['template']]
+            if "template" in self.content[file]:
+                single_template_file = self.templates[self.content[file]["template"]]
             else:
-                single_template_file = self.templates['page.html']
+                single_template_file = self.templates["page.html"]
 
             # load the template
             single_content = single_template_file
-            single_content = single_content.replace("{{title}}", self.content[file]['title'])
-            single_content = single_content.replace("{{content}}", self.content_rendered[file])
+            single_content = single_content.replace(
+                "{{title}}", self.content[file]["title"]
+            )
+            single_content = single_content.replace(
+                "{{content}}", self.content_rendered[file]
+            )
 
-            excerpt = self.hooks.apply('excerpt', self.content[file]['excerpt'], file, self)
+            excerpt = self.hooks.apply(
+                "excerpt", self.content[file]["excerpt"], file, self
+            )
             single_content = single_content.replace("{{excerpt}}", excerpt)
-            
-            single_content = self.hooks.apply('single_content', single_content, file, self)
-            self.prerendered_html[file] = self.prerendered_html[file].replace("{{content}}", single_content)
+
+            single_content = self.hooks.apply(
+                "single_content", single_content, file, self
+            )
+            self.prerendered_html[file] = self.prerendered_html[file].replace(
+                "{{content}}", single_content
+            )
 
             # hook right before the custom functions executes
-            self.prerendered_html[file] = self.hooks.apply('pre_load_custom_functions', self.prerendered_html[file], file, self)
+            self.prerendered_html[file] = self.hooks.apply(
+                "pre_load_custom_functions", self.prerendered_html[file], file, self
+            )
 
             # load the template functions
-            self.rendered_html[file] = self.load_custom_functions(self.prerendered_html[file])
-        
+            self.rendered_html[file] = self.load_custom_functions(
+                self.prerendered_html[file]
+            )
+
         # hook right after the custom functions which has potential
         # to overwrite certain template variables
-        self = self.hooks.apply('after_render_content', self)
+        self = self.hooks.apply("after_render_content", self)
 
     def load_template_file(self, template_file_name) -> str:
         """
@@ -343,7 +363,10 @@ class LSTE:
                 template_part = template_part.replace("}}", "")
                 template_part_filename = template_part
                 part_content = self.load_template_file(template_part_filename)
-                html = html.replace(f"{self.brackets_start}part: {template_part_filename}{self.brackets_end}", part_content)
+                html = html.replace(
+                    f"{self.brackets_start}part: {template_part_filename}{self.brackets_end}",
+                    part_content,
+                )
         return html
 
     def load_custom_functions(self, html) -> str:
@@ -359,12 +382,12 @@ class LSTE:
         """
         # timestamp
         timestamp = int(time.time())
-        html = html.replace('{{timestamp}}', str(timestamp))
+        html = html.replace("{{timestamp}}", str(timestamp))
 
         # replace config variables
-        html = html.replace('{{title}}', self.config_file['lste']['title'])
-        html = html.replace('{{keywords}}', self.config_file['lste']['keywords'])
-        html = html.replace('{{description}}', self.config_file['lste']['description'])
+        html = html.replace("{{title}}", self.config_file["lste"]["title"])
+        html = html.replace("{{keywords}}", self.config_file["lste"]["keywords"])
+        html = html.replace("{{description}}", self.config_file["lste"]["description"])
 
         return html
 
@@ -382,20 +405,21 @@ class LSTE:
         os.makedirs(self.dist_path)
 
         # copy assets folder
-        shutil.copytree(self.assets_path, self.dist_path + '/assets')
+        shutil.copytree(self.assets_path, self.dist_path + "/assets")
 
         for filename in self.rendered_html:
-            html_filename = filename.replace('.md', '.html')
+            html_filename = filename.replace(".md", ".html")
             content = self.rendered_html[filename]
             content = content.lstrip()
 
-            with open(f'{self.dist_path}/{html_filename}',"w") as handle:
+            with open(f"{self.dist_path}/{html_filename}", "w") as handle:
                 handle.write(content)
-        
-        self = self.hooks.apply('after_save_site', self)
 
-''' Startup '''
-if __name__ == '__main__':
+        self = self.hooks.apply("after_save_site", self)
+
+
+""" Startup """
+if __name__ == "__main__":
     try:
         lste = LSTE()
     except KeyboardInterrupt:

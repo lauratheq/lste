@@ -1,4 +1,8 @@
+dist
+.vscode
+.mypy_cache
 build
 .lsterc
 plugins
 __pycache__
+lste.spec

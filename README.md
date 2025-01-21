@@ -92,25 +92,13 @@ Starts the watcher for the `./example` project.
 
 ## Plugins
 
-LSTE itself is very limited in its functionality but it comes with a plugin system which allows expanding everything in LSTE.
-
-### Currated Plugins
-
-Currently there are following currated plugins available:
-
-* [Meta](https://github.com/lauratheq/meta.lste) allows the usage of meta fields throught an LSTE project
-* [Active Menu](https://github.com/lauratheq/active-menu.lste) which allows to indicate which menu entry should be active
-* [Articles](https://github.com/lauratheq/articles.lste) enables a blog like content management
-* [Excerpts Markdown](https://github.com/lauratheq/excerpts-markdown.lste) enables markdown rendering for excerpts
-* [RSS](https://github.com/lauratheq/rss.lste) generates an RSS-Feed out of the articles.
-
-See the readmes on the plugins for more information about their functionality.
+LSTE itself is very limited in its functionality but it comes with a plugin system which allows expanding everything in LSTE. These plugins are loaded depending on the project settings.
 
 ### Using plugins
 
 Using plugins in LSTE is fairly easy:
 
-1. Create a file in your home directory called `.listerc`
+1. Head to the configuration of your site in `lste.conf`
 2. Place the content for the plugins into it whereas the value is the shortened address of the plugin on github:
 
 ```
@@ -123,6 +111,18 @@ rss = lauratheq/rss.lste
 ```
 
 And that's it. LSTE will download the plugins with the next page generation.
+
+### Currated Plugins
+
+Currently there are following currated plugins available:
+
+* [Meta](https://github.com/lauratheq/meta.lste) allows the usage of meta fields throught an LSTE project
+* [Active Menu](https://github.com/lauratheq/active-menu.lste) which allows to indicate which menu entry should be active
+* [Articles](https://github.com/lauratheq/articles.lste) enables a blog like content management
+* [Excerpts Markdown](https://github.com/lauratheq/excerpts-markdown.lste) enables markdown rendering for excerpts
+* [RSS](https://github.com/lauratheq/rss.lste) generates an RSS-Feed out of the articles.
+
+See the readmes on the plugins for more information about their functionality.
 
 ## Contributing
 

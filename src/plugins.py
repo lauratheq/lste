@@ -30,12 +30,12 @@ class Plugins:
     including downloading updates and installing them from remote repositories.
 
     Attributes:
-        rcfile (Optional[ConfigParser]): The configuration file object containing plugin details.
+        config_file (Optional[ConfigParser]): The configuration file object containing plugin details.
         plugins (Dict[str, Any]): A dictionary where keys are plugin names and values are the plugin modules.
         plugins_folder (str): The path to the folder where plugins are stored.
 
     Methods:
-        __init__(rcfile=None) -> None:
+        __init__(config_file=None) -> None:
             Initializes the Plugins class with an optional configuration file object.
         init_plugins(lste) -> Dict[str, Any]:
             Initializes and loads plugins into memory based on the configuration.
@@ -45,21 +45,21 @@ class Plugins:
         download_and_install_plugin(repo: str, local_plugin_path: str, latest_release: Dict[str, Any]) -> None:
             Downloads and installs or updates the plugin from the given repository using the latest release information.
     """
-    rcfile = None
+    config_file = None
     plugins: Dict[str, Any] = {}
     plugins_folder = os.path.expanduser("~/.local/share/lste/plugins")
 
-    def __init__(self, rcfile=None) -> None:
+    def __init__(self, config_file=None) -> None:
         """
         Initializes the Plugins class.
 
         Parameters:
-            rcfile (ConfigParser, optional): The configuration file object with plugin details.
+            config_file (ConfigParser, optional): The configuration file object with plugin details.
 
         Returns:
             None
         """
-        self.rcfile = rcfile
+        self.config_file = config_file
         self.plugins = {}
 
     def init_plugins(self, lste) -> Dict[str, Any]:
@@ -76,11 +76,15 @@ class Plugins:
             Dict[str, Any]: A dictionary where keys are plugin names and values are the loaded plugin modules.
         """
         # Check if the configuration file is not present
-        if not self.rcfile:
+        if not self.config_file:
+            return {}
+        
+        # Check if the "plugins" section exists before retrieving its items
+        if not self.config_file.has_section("plugins"):
             return {}
 
         # Retrieve the plugin items from the configuration
-        plugin_items = self.rcfile.items("plugins")
+        plugin_items = self.config_file.items("plugins")
         if not plugin_items:
             return {}
 
@@ -112,6 +116,7 @@ class Plugins:
             # Call the register_hooks method if it exists
             if hasattr(plugin, 'register_hooks') and callable(getattr(plugin, 'register_hooks')):
                 plugin.register_hooks(lste)
+                print(f"Using plugin: {plugin_name}")
 
         return self.plugins
     
@@ -129,12 +134,16 @@ class Plugins:
         Returns:
             None
         """
+        # Check if the "plugins" section exists before retrieving its items
+        if not self.config_file.has_section("plugins"):
+            return {}
+        
         # Retrieve the plugin items from the configuration
-        plugin_items = self.rcfile.items("plugins")
+        plugin_items = self.config_file.items("plugins")
         if not plugin_items:
             return
         
-        # Parse the rcfile to get the list of plugins and their repositories
+        # Parse the config_file to get the list of plugins and their repositories
         for plugin_name, repo in plugin_items:
 
             # Check if the plugin is already installed locally
